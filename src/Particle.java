@@ -25,6 +25,15 @@ public class Particle {
         y += vy;
     }
 
+    public void fade(int fader){
+        if(color.getAlpha()-fader>0){
+            this.setColor(new Color(color.getRed(),color.getGreen(),color.getBlue(),color.getAlpha()-fader));
+        }
+        else{
+            this.setColor(new Color(color.getRed(),color.getGreen(),color.getBlue(),0));
+        }
+    }
+
 
 
     public void draw(Graphics g){

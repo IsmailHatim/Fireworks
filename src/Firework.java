@@ -4,18 +4,19 @@ import java.util.ArrayList;
 
 
 public class Firework {
-    public ArrayList<Particle> particles = new ArrayList<>();
-    public String type;
-    public double explodingRatio;
-    public double mismatch;
-    public double x;
-    public double y;
-    public double vx;
-    public double vy;
-    public double ax;
-    public double ay;
-    public double vylim;
+    protected ArrayList<Particle> particles = new ArrayList<>();
+    protected String type;
+    protected double mismatch;
+    protected double x;
+    protected double y;
+    protected double vx;
+    protected double explodingRatio;
+    protected double vy;
+    protected double ax;
+    protected double ay;
+    protected double vylim;
     protected boolean exploded;
+    //protected Particle highest_particle;
 
 
     public Firework(double x,double y, double vy0,double vylim, int size, double mismatch, double explodingRatio, String type, Color color){
@@ -37,7 +38,7 @@ public class Firework {
                     break;
                 case "unicolour2":
                     double rnd = 10*(Math.random() + Math.random()*(-1));
-                    particles.get(i).setColor(new Color((int) (color.getRed()+rnd),(int) (color.getGreen()+rnd),(int) (color.getBlue()+rnd)));
+                    particles.get(i).setColor(new Color(((int) (color.getRed()+rnd))%255,((int) (color.getGreen()+rnd))%255,((int) (color.getBlue()+rnd))%255));
                     break;
                 case "rainbow":
                     //Partie à faire
@@ -57,6 +58,9 @@ public class Firework {
         y += vy;
         for (int i = 0; i < particles.size(); i++) {
             particles.get(i).update();
+            if(exploded){
+                particles.get(i).fade(Gyvenimas.randint(Gyvenimas.FADER,Gyvenimas.FADER+2));
+            }
         }
         if(vy > vylim && exploded == false){
             this.explode();
@@ -66,24 +70,20 @@ public class Firework {
 
     public void explode(){
         for (int i = 0; i < particles.size(); i++){
-            particles.get(i).setVx(2*explodingRatio*(Math.random() + Math.random()*(-1)));
-            particles.get(i).setVy(2*explodingRatio*(Math.random() + Math.random()*(-1)));
+            particles.get(i).setVx((2*explodingRatio + Gyvenimas.MIN_EXPLODING_RATIO)*(Math.random() + Math.random()*(-1)));
+            particles.get(i).setVy((2*explodingRatio + Gyvenimas.MIN_EXPLODING_RATIO)*(Math.random() + Math.random()*(-1)));
         }
     }
 
-    /*public Particle highestParticle(){
-
-    }*/
-
     public static Firework randomFirework(int x, int y,int vyo, int vylim){
         int rnd = Gyvenimas.randint(0,3);
-        String randomType = "unicoulour1";
+        String randomType = "unicolour1";
         switch (rnd){
             case 0:
                 randomType = "unicolour1";
                 break;
             case 1:
-                randomType = "unicoulour2";
+                randomType = "unicolour2";
                 break;
             case 2:
                 randomType = "random"; // Need to put rainbow, when I'll finish coding it..
@@ -102,7 +102,7 @@ public class Firework {
         randomColor = randomColor.brighter();//Can also add a brightness parameter
 
 
-        Firework f = new Firework(x, y, vyo, vylim,Gyvenimas.randint(400,1000), Math.random(), Math.random()*30,randomType,randomColor);
+        Firework f = new Firework(x, y, vyo, vylim,Gyvenimas.randint(400,1000), Math.random(), Math.random()*5, randomType, randomColor);
         return f;
     }
 

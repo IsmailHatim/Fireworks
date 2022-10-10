@@ -5,9 +5,12 @@ import java.util.TimerTask;
 
 public class Gyvenimas {
     public final static double GRAVITY = 0.4;
-    public final static int PARTICLE_SIZE = 5;
+    public final static int PARTICLE_SIZE = 10;
     public final static int WINDOW_WIDTH = 1000;
     public final static int WINDOW_HEIGHT = 1000;
+    public final static int FADER = 4;
+    public final static int MIN_EXPLODING_RATIO = 5;
+    public final static int MAX_EXPLODING_RATIO = 5;
     static double time = 0;
 
 

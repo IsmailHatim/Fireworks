@@ -59,7 +59,7 @@ public class Firework {
         for (int i = 0; i < particles.size(); i++) {
             particles.get(i).update();
             if(exploded){
-                particles.get(i).fade(Gyvenimas.randint(Gyvenimas.FADER,Gyvenimas.FADER+2));
+                particles.get(i).fade(Gyvenimas.randint(Gyvenimas.FADING_SPEED,Gyvenimas.FADING_SPEED+2));
             }
         }
         if(vy > vylim && exploded == false){
